@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+	<title>Inequality Demo</title>
+	<link rel="stylesheet" type="text/css" href="dist/semantic.min.css">
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>
+	<script src="dist/semantic.min.js"></script>
+	<style type="text/css">
+		html, body {
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
+			/*background-color: #ffeaa7;*/
+		}
+		body {
+			font-family: sans-serif;
+		}
+		#start-button {
+			font-size: 25px;
+			position: fixed;
+			top: 430px;
+			left: 75px;
+		}
+		#play-button {
+			font-size: 25px;
+			position: fixed;
+			top: 430px;
+			left: 175px;
+		}
+		#board {
+			top: 50px;
+			left: 320px;
+			position: fixed;
+			height: 500px;
+			width: 750px;
+			display: grid;
+			grid-template-columns: 750px;
+  			grid-template-rows: 500px;
+  			background-color: black;
+			overflow: hidden;
+		}
+		#vboard {
+			position: fixed;
+			top: 0px;
+			left: 0px;
+		}
+		.shape {
+			position: fixed;
+			width: 40px;
+			height: 40px;
+			background-size: contain;
+			/*border: 1px solid red;*/
+		}
+		.board-segment {
+			background-color: #dfe6e9;
+			/*background-color: white;*/
+			margin: 5px;
+			cursor: pointer;
+			overflow: hidden;
+		}
+		.board-segment p {
+			font-size: 100px;
+			overflow: hidden;
+			color: white;
+			text-align: center;
+			padding-top: 20%;
+		}
+		img {
+			height: 40px;
+			width: 40px;
+		}
+		.rich {
+			background-image: url(dot_rich.svg);
+			/*border: 1px blue solid;*/
+		}
+		.mid {
+			background-image: url(dot_middle.svg);
+			/*border: 1px yellow solid;*/
+		}
+		.poor {
+			background-image: url(dot_poor.svg);
+			/*border: 1px green solid;*/
+		}
+
+		.slidecontainer {
+		    width: 100%; /* Width of the outside container */
+		    position: absolute;
+		    bottom: 0px;
+		}
+
+		/* The slider itself */
+		.slider {
+		    -webkit-appearance: none;  /* Override default CSS styles */
+		    appearance: none;
+		    width: 100%; /* Full-width */
+		    height: 25px; /* Specified height */
+		    background: #d3d3d3; /* Grey background */
+		    outline: none; /* Remove outline */
+		    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+		    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+		    transition: opacity .2s;
+		}
+
+		/* Mouse-over effects */
+		.slider:hover {
+		    opacity: 1; /* Fully shown on mouse-over */
+		}
+
+		/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+		.slider::-webkit-slider-thumb {
+		    -webkit-appearance: none; /* Override default look */
+		    appearance: none;
+		    width: 25px; /* Set a specific slider handle width */
+		    height: 25px; /* Slider handle height */
+		    background: #4CAF50; /* Green background */
+		    cursor: pointer; /* Cursor on hover */
+		}
+
+		.slider::-moz-range-thumb {
+		    width: 25px; /* Set a specific slider handle width */
+		    height: 25px; /* Slider handle height */
+		    background: #4CAF50; /* Green background */
+		    cursor: pointer; /* Cursor on hover */
+		}
+		div.grid-inputs {
+			margin-top: 100px;
+			margin-left: 50px;
+			width: 220px;
+		}
+		div.income-inputs {
+			margin-top: 10px;
+			margin-left: 50px;
+			width: 220px;
+		}
+		div.ui.input div.ui.label {
+			width: 70%;
+		}
+		.ui.poor.label {
+		  background-color: #60a3bc !important;
+		  border-color: #60a3bc !important;
+		  color: #FFFFFF !important;
+		}
+		.ui.mid.label {
+		  background-color: #3c6382 !important;
+		  border-color: #3c6382 !important;
+		  color: #FFFFFF !important;
+		}
+		.ui.rich.label {
+		  background-color: #0a3d62 !important;
+		  border-color: #0a3d62 !important;
+		  color: #FFFFFF !important;
+		}
+		#start-screen p.title-text {
+			font-size: 25px;
+		}
+		#start-screen {
+			font-size: 18px;
+		}
+	</style>
+	
+<!-- <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="javascript/semantic.js" type="text/javascript"></script> -->
+<script src="./dist/build.js"></script>
+</head>
+
+<body>
+
+<div id='interface'>
+  	<component :is="view" ></component>
+</div>
+
+<template id="template">
+<div>
+	<div class="ui active dimmer" v-if="showStartScreen">
+	    <div class="ui inverted padded segment" id="start-screen" style="width:850px">
+	    	<p class="title-text">
+				In this city, little tenants are looking for places to stay!<br/>(And landlords out to profit!)
+			</p>
+	    	<div class="ui two column stackable center aligned internally celled grid">
+	    	<!-- <div class="ui grid"> -->
+    			<!-- <div class="ui vertical divider" /> -->
+    			<div class="middle aligned row">
+    			<!-- <div class="row"> -->
+    				<div class="ten wide column">
+						<p>
+							Each sector in the grid is owned by a landlord, who controls the maintenance and charges rent.
+						</p>
+						<p>
+							Higher Maintenance = Better Property + More Rent/Profit
+						</p>
+						<p>
+							Rent gets divided amongst the tenants living in each sector.
+						</p>
+						<p>
+							Each tenant tries to stay in the best and least crowded property they can afford.
+						</p>
+					</div>
+					<div class="six wide column">
+						<div style="text-align: left; margin-top: 10px; margin-bottom: 10px;">
+							<img class="ui middle aligned tiny image" src="yay_triangle.png">
+							<span>Low Income</span>
+						</div>
+						<div style="text-align: left; margin-top: 10px; margin-bottom: 10px;">
+							<img class="ui middle aligned tiny image" src="yay_triangle.png">
+							<span>Middle Income</span>
+						</div>
+						<div style="text-align: left; margin-top: 10px; margin-bottom: 10px;">
+							<img class="ui middle aligned tiny image" src="yay_triangle.png">
+							<span>High Income</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui massive red button" @click="showStartScreen=false">BOOP</div>
+  	</div>
+	<div class="grid-inputs">
+		<div class="ui fluid huge labeled input" v-bind:class="{disabled: this.loaded}">
+		  <div class="ui label">
+		    Columns
+		  </div>
+		  <input type="text" v-model="nSectorsX">
+		</div>
+		<div class="ui fluid huge labeled input" v-bind:class="{disabled: this.loaded}">
+		  <div class="ui label">
+		    Rows
+		  </div>
+		  <input type="text" v-model="nSectorsY">
+		</div>
+	</div>
+	<div class="income-inputs">
+		<div class="ui fluid huge labeled input" v-bind:class="{disabled: this.loaded}">
+		  <div class="ui label poor">
+		    Low Income
+		  </div>
+		  <input type="text" v-model="nLowIncome">
+		</div>
+		<div class="ui fluid huge labeled input" v-bind:class="{disabled: this.loaded}">
+		  <div class="ui label mid">
+		    Mid Income
+		  </div>
+		  <input type="text" v-model="nMidIncome">
+		</div>
+		<div class="ui fluid huge labeled input" v-bind:class="{disabled: this.loaded}">
+		  <div class="ui label rich">
+		    High Income
+		  </div>
+		  <input type="text" v-model="nHighIncome">
+		</div>
+	</div>
+	<button class="circular ui icon button red" id="start-button" @click="init()" v-bind:class="{disabled: this.playing}">
+	  <i class="icon" v-bind:class="{power: !this.loaded, off: !this.loaded, redo: this.loaded}"></i>
+	</button>
+	<button class="circular ui icon button green" id="play-button" @click="pausePlaySimulation()" v-bind:class="{disabled: !this.loaded}">
+	  <i class="icon" v-bind:class="{play: !this.playing, pause: this.playing}"></i>
+	</button>
+	<div class="slidecontainer">
+	  <input type="range" min="0" max="1" step="0.001" class="slider" id="scrubber">
+	</div>
+
+	<div id="board">
+		<div v-for="(id, idx) in sectorIds" class="board-segment" v-bind:id="id" @click="gentrify(idx)">
+		</div>
+	</div>
+	<div id="vboard">
+	</div>
+</div>
+</template>
+
+</body>
+
+</html>
