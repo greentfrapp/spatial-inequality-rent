@@ -73,16 +73,56 @@
 			width: 40px;
 		}
 		.rich {
-			background-image: url(dot_rich.svg);
+			background-image: url(assets/dot_rich.svg);
 			/*border: 1px blue solid;*/
 		}
+		.rich-blink {
+			background-image: url(assets/dot_rich_blink.svg);
+		}
+		.rich.plus, .rich-blink.plus {
+			background-image: url(assets/dot_rich+.svg);
+		}
+		.rich.minus {
+			background-image: url(assets/dot_rich-.svg);
+		}
+		.rich-blink.minus {
+			background-image: url(assets/dot_rich_blink-.svg);
+		}
 		.mid {
-			background-image: url(dot_middle.svg);
+			background-image: url(assets/dot_middle.svg);
 			/*border: 1px yellow solid;*/
 		}
+		.mid-blink {
+			background-image: url(assets/dot_middle_blink.svg);
+		}
+		.mid.plus, .mid-blink.plus {
+			background-image: url(assets/dot_middle+.svg);
+		}
+		.mid.minus {
+			background-image: url(assets/dot_middle-.svg);
+		}
+		.mid-blink.minus {
+			background-image: url(assets/dot_middle_blink-.svg);
+		}
 		.poor {
-			background-image: url(dot_poor.svg);
+			background-image: url(assets/dot_poor.svg);
 			/*border: 1px green solid;*/
+		}
+		.poor-blink {
+			background-image: url(assets/dot_poor_blink.svg);
+		}
+		.poor.plus, .poor-blink.plus {
+			background-image: url(assets/dot_poor+.svg);
+		}
+		.poor.minus {
+			background-image: url(assets/dot_poor-.svg);
+		}
+		.poor-blink.minus {
+			background-image: url(assets/dot_poor_blink-.svg);
+		}
+
+		.non {
+			background-image: url(assets/dot_non.svg);
 		}
 
 		.slidecontainer {
@@ -204,15 +244,15 @@
 					</div>
 					<div class="six wide column">
 						<div style="text-align: left; margin-top: 10px; margin-bottom: 10px;">
-							<img class="ui middle aligned tiny image" src="yay_triangle.png">
+							<img class="ui middle aligned tiny image" src="assets/dot_poor.svg" id="start-screen-poor">
 							<span>Low Income</span>
 						</div>
 						<div style="text-align: left; margin-top: 10px; margin-bottom: 10px;">
-							<img class="ui middle aligned tiny image" src="yay_triangle.png">
+							<img class="ui middle aligned tiny image" src="assets/dot_middle.svg" id="start-screen-middle">
 							<span>Middle Income</span>
 						</div>
 						<div style="text-align: left; margin-top: 10px; margin-bottom: 10px;">
-							<img class="ui middle aligned tiny image" src="yay_triangle.png">
+							<img class="ui middle aligned tiny image" src="assets/dot_rich.svg" id="start-screen-rich">
 							<span>High Income</span>
 						</div>
 					</div>
